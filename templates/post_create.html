@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1 class="h3" style="margin-left: 10%; margin-top: 2%">
+    Create Post
+</h1>
+<div class="container">
+<form action="." method="POST">
+    <div class="row">
+        <div class="form-group col-md-12">
+    {% csrf_token %}
+    {% crispy form %}
+        </div>
+    <!-- <div class="form-group col-md-12">
+    <button class='btn btn-primary' type="submit">Save Post</button>
+</div> -->
+</div>
+        </div>
+    
+
+</form>
+
+{% endblock %}

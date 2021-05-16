@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="." method="POST">
+    {% csrf_token %}
+    {{ form }}
+<input type="text" name="First_name" placeholder="Please enter your first name">
+<input type="text" name="Last_name" placeholder="Please enter your Last name">
+<input type="text" name="username" placeholder="Please enter your Username">
+<input type="email" name="email" placeholder="Please enter your Email">
+<input type="password" name="password" placeholder="Enter password">
+<input type="submit">
+
+</form>
+
+{% endblock %}

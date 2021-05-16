@@ -1,0 +1,44 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+
+
+{% block content %}
+{% include 'header.html' %}
+<br>
+<div class="container">
+<h1>{% trans "Sign In" %}</h1>
+
+
+<div class="align-content-center">
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  <div class="row">
+    <div class="form-group col-md-12">
+      {% csrf_token %}
+        {% for field in form %}
+          {% for error in field.errors %}
+            <div class="alert alert-dismissible" role="alert">
+              <strong>{{ error|escape }}</strong>
+            </div>
+          {% endfor %}
+          <div class="submit-link-row">{{field.label_tag}}: {{ field }}</div>
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            <strong>{{ error|escape }}</strong>
+          </div>
+        {% endfor %}
+      
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="btn btn-success btn-md" type="submit">{% trans "Sign In" %}</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+{% endblock %}

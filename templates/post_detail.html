@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}  
+
+    
+    <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="post blog-post col-lg-8"> 
+          <div class="container">
+            <div class="post-single">
+              <div class="post-details">
+                
+                <h1>{{ post.title }}</h1>
+                <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
+                  
+                  <div class="title"><span>Post created by {{ post.author.user.username }}</span></div></a>
+                  <div class="d-flex align-items-center flex-wrap">       
+                    <div class="date"><i class="icon-clock"></i> {{ post.timestamp|timesince }} ago</div>
+                    
+                    
+                  </div>
+                </div>
+                <div class="post-body">
+                  <p class="lead">{{ post.body }}</p>
+                </div>
+                {% if request.user.is_staff %}
+                  <div >
+                    <p style="margin: auto;"><a href="{% url 'post_edit' id=post.id %}">Edit Post</a></p>
+                    <p style="margin: auto;"><a href="{% url 'post_delete' id=post.id %}">Delete Post</a></p>
+                  </div>
+                  {% endif %}
+                  
+                  <!-- Comment section -->
+                  <div class="post-comments">
+                    <header>
+                    <h3 class="h6"> <u> Comments</u></h3>
+                  </header>
+                  <div class="comment">
+                    {% for comment in post.get_comments %}
+                    <div class="comment-header d-flex justify-content-between">
+                      <div class="user d-flex align-items-center">
+                        
+                        <div class="title"><strong>{{ comment.user.username }}</strong><span class="date">{{ comment.timestamp|timesince }} ago</span></div>
+                      </div>
+                    </div>
+                    <div class="comment-body" style="margin-left: auto;">
+                      <p>{{ comment.content }}</p>
+                    </div>
+                  </div>
+
+                    <div class="comment-header d-flex justify-content-between">
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+                <div class="add-comment">
+                  {% if request.user.is_authenticated %}
+                  <header>
+                    <h3 class="h6">Leave a reply</h3>
+                  </header>
+                  
+                  <form action="." method="POST" class="commenting-form">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        {{ form|crispy }}
+                      </div>
+                      <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                      </div>
+                    </div>
+                  </form>
+                  {% else %}
+                  <h3 class="h6"> <a href="{% url 'account_login' %}?next={{ request.path }}">Sign in to Leave a reply</a> </h3>
+
+                  {% endif %}
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </main>
+
+        
+    <!-- JavaScript files-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/popper.js/umd/popper.min.js' %}"> </script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{% static 'vendor/@fancyapps/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/front.js' %}"></script>
+
+
+{% endblock %}

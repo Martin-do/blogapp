@@ -1,0 +1,25 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for post in posts %}
+<div class="post-entry">
+
+    <h3>
+        <a href="{{ post.get_absolute_url }}">
+        {{ post.title }}
+        </a>
+    </h3>
+
+
+{% endfor %}
+{% if request.user.is_staff %}
+<p><a href="{% url 'post_create' %}">
+    + Create post
+</a> </p>
+{% endif %}
+</div>
+
+{% endblock %}

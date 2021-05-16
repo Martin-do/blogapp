@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}  
+
+    
+    <section class="featured-posts no-padding-top">
+      <div class="container">
+        
+        <div class="row d-flex align-items-stretch">
+          {% for post in posts %}
+          <div class="text col-lg-7">
+            <div class="text-inner d-flex align-items-center">
+
+              <div class="content">
+                    <a href="{{ post.get_absolute_url }}"><div class="h4"><span>{{ post.title }}</span></div></a>
+                  <div class="date"><i class="icon-clock"></i> {{ post.timestamp|timesince }}</div>
+                  
+              </div>
+            </div>
+          </div>
+          
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/popper.js/umd/popper.min.js' %}"> </script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{% static 'vendor/@fancyapps/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/front.js' %}"></script>
+
+    {% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>post detail test</h1>
+
+<div class="post-entry">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.body }}</p>
+    <br>
+    <p>Post created by {{ post.author.user.username }}</p>
+
+    {% if request.user.is_staff %}
+    <p><a href="{% url 'post_edit' id=post.id %}">
+        Edit Post
+    </a></p>
+    
+    <p><a href="{% url 'post_delete' id=post.id %}">
+        Delete Post
+    </a></p>
+    {% endif %}
+
+    <div class="comment">
+        <h4>Comments</h4>
+            {% for comment in post.get_comments %}
+                <p>{{ comment.user.username }}</p>
+                <br>
+                <p>{{ comment.content }}</p>
+            {% endfor %}
+            {% if request.user.is_authenticated %}
+            <form action="." method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Comment</button>
+                
+            </a></p>
+        </form>
+        
+        {% else %}
+        <p><a href="{% url 'account_login' %}">
+        Sign in to leave a comment
+        {% endif %}
+    </div>
+{% endblock %}
